@@ -1,4 +1,3 @@
-// HOS10A server.mjs
 import express from "express";
 import cors from "cors";
 import "./loadEnvironment.mjs";
@@ -9,12 +8,11 @@ import session from "express-session";
 import passportFacebook from "passport-facebook"
 const FacebookStrategy = passportFacebook.Strategy;
 
-// Replace with your Facebook App credentials
-// When you make a Facebook App, that app will have an App ID and an App Secret. 
-// With the App ID, you can send several requests to Facebook for data. 
-// The Facebook App Secret will be used to decode the encrypted messages from Facebook, so that sensitive information remains protected.
-const FACEBOOK_APP_ID = '3650013371899193';
-const FACEBOOK_APP_SECRET = '234f0333f8d8c235caf54a67dd7b155e';
+const FACEBOOK_APP_ID = '802470011559801';
+const FACEBOOK_APP_SECRET = '3e082daf689df4b171696c0ff2df3ba5';
+
+const PORT = process.env.PORT || 5050;
+const app = express();
 
 passport.use(
   new FacebookStrategy(
@@ -22,7 +20,7 @@ passport.use(
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
       // Your callback URL
-      callbackURL: 'https://stunning-acorn-gg5564qx69pc97v4-5050.app.github.dev/facebook/callback', 
+      callbackURL: 'https://fluffy-pancake-qjq64pv9jjh96r4-5050.app.github.dev/facebook/callback', 
       // Fields you want to access from the user's Facebook profile
       profileFields: ['id', 'displayName', 'email'], 
     },
@@ -41,9 +39,6 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-const PORT = process.env.PORT || 5050;
-const app = express();
-
 app.use(cors());
 app.use(express.json());
 
@@ -57,9 +52,9 @@ app.use(passport.session());
 app.get('/facebook', passport.authenticate('facebook'));
 app.get('/facebook/callback', passport.authenticate('facebook', {
   // Redirect to the main page upon successful login.
-  successRedirect: 'https://stunning-acorn-gg5564qx69pc97v4-3000.app.github.dev/home', 
+  successRedirect: 'https://fluffy-pancake-qjq64pv9jjh96r4-3000.app.github.dev/home', 
   // Redirect to login page on authentication failure.
-  failureRedirect: 'https://stunning-acorn-gg5564qx69pc97v4-3000.app.github.dev/', 
+  failureRedirect: 'https://fluffy-pancake-qjq64pv9jjh96r4-3000.app.github.dev/', 
 }));
 
 // start the Express server
